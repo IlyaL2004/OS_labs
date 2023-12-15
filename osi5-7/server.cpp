@@ -40,7 +40,6 @@ int main(int argc, char *argv[]){
             std::string str;
             request >> child;
             getline(request, str);
-            str.erase(0, 1);
             std::string answer = node.sendStr(str, child);
             send_message(node.parent, answer);
         }
