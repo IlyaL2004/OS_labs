@@ -142,10 +142,8 @@ class Tree{
 
     private:
         Node* root;
-//        std::map<std::pair<>>
     public:
         std::set<int> ids;
-        //std::set<int> notAvailable;
         Tree(){
             root = new Node(-1);
         } 
