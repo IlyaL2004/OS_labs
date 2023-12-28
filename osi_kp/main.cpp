@@ -15,10 +15,11 @@ struct Node {
     bool busy = false;
     string work = "not job";
 };
+typedef int (*FnPtr)();
+map<int, Node> graph;
+map<string, FnPtr> myF;  
 
-map<int, Node> graph;  
-
-bool Cyclic_one(int v, bool visited[], bool *in_rec_stack) {
+bool Cyclic_one(int v, bool visited[], bool in_rec_stack[]) {
     if (!visited[v]) {
         visited[v] = true;
         in_rec_stack[v] = true;
@@ -68,22 +69,53 @@ bool Connected(std::vector<int>& endnods) {
 }
 
 
+int AAA() { return 111; }
+int BBB() { return 222; }
+int CCC() { return 333; }
+int DDD() { 
+    int i; 
+    cout << "Введите число: "; 
+    cin >> i; 
+    if(i == -1) 
+        return -1; 
+    else 
+        return i;
+    }
+int EEE() { return 555; }
+int FFF() { return 666; }
+
+
+typedef int (*FnPtr)();
+
+
+
 void all_work(std::vector<int>& startNodes){
     queue<int> queue;
     int id_work_node, id_work_node_next, size;
     Node *work_node;
     string work;
     Node *next_work_node;
+    int res;
     for (int i = 0; i < startNodes.size(); i++){
         queue.push(startNodes[i]);
     }
         for (int i = 0; i < graph.size() - 1 ; i++){
             id_work_node = queue.front();
-            cout << id_work_node << endl;
+            cout << "JOB: " << id_work_node << endl;
             queue.pop();
             work_node = &(graph.find(id_work_node) -> second);
             work = work_node->work;
-            cout << work << endl;
+            if(work != "not job"){
+                res = myF[work]();
+                if (res == -1){
+                    cout << "error" << endl;
+                    break;
+                }
+                cout << res << endl;
+            }
+            else{
+                cout << work << endl;
+            }
             work_node->busy = true;
             size = work_node->heirs.size();
             if(size != 0){
@@ -95,6 +127,7 @@ void all_work(std::vector<int>& startNodes){
                 }
             }
         }
+        
 }
 
 int main() {
@@ -104,6 +137,12 @@ int main() {
     vector<int> endNodes;
     int id;
     Node *work_node_now;
+    myF["AAA"] = AAA;
+    myF["BBB"] = BBB;
+    myF["CCC"] = CCC;
+    myF["DDD"] = DDD;
+    myF["EEE"] = EEE;
+    myF["FFF"] = FFF;
     while (getline(configFile, line)) {
         if (line.find('=') != string::npos) {
             istringstream is(line);
