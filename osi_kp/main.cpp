@@ -18,35 +18,35 @@ struct Node {
 
 map<int, Node> graph;  
 
-bool Cyclic_one(int v, bool visited[], bool *recStack) {
+bool Cyclic_one(int v, bool visited[], bool *in_rec_stack) {
     if (!visited[v]) {
         visited[v] = true;
-        recStack[v] = true;
+        in_rec_stack[v] = true;
 
         for (int i = 0; i < graph[v].heirs.size(); i++) {
             int n = graph[v].heirs[i];
-            if (!visited[n] && Cyclic_one(n, visited, recStack)) {
+            if (!visited[n] && Cyclic_one(n, visited, in_rec_stack)) {
                 return true;
-            } else if (recStack[n]) {
+            } else if (in_rec_stack[n]) {
                 return true;
             }
         }
 
     }
-    recStack[v] = false;
+    in_rec_stack[v] = false;
     return false;
 }
 
 bool Cyclic() {
     bool *visited = new bool[graph.size()];
-    bool *recStack = new bool[graph.size()];
+    bool *in_rec_stack = new bool[graph.size()];
     for (int i = 0; i < graph.size(); i++) {
         visited[i] = false;
-        recStack[i] = false;
+        in_rec_stack[i] = false;
     }
 
     for (int i = 0; i < graph.size(); i++) {
-        if (Cyclic_one(i, visited, recStack)) {
+        if (Cyclic_one(i, visited, in_rec_stack)) {
             return true;
         }
     }
