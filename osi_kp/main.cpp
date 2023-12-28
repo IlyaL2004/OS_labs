@@ -113,7 +113,7 @@ int main() {
                     Node node;
                     id = stoi(value);
                     graph[stoi(value)] = node;
-                } else if (key == "EDGE") {
+                } else if (key == "CONNECTION") {
                     int from, to;
                     istringstream(value) >> from >> to;
                     graph[from].heirs.push_back(to);
